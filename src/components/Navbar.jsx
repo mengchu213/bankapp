@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { close, logo, menu } from "../assets";
-import { navLinks } from "../constants";
+import {useState} from "react";
+import {close, logo, menu} from "../assets";
+import {navLinks} from "../constants";
 
 const Navbar = () => {
   const [toggle, seToggle] = useState(false);
