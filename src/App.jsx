@@ -1,11 +1,28 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styles from "./style";
 import {Navbar, Hero, CTA, Footer, Login, Dashboard} from "./components";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {UserContext} from "./UserContext";
+import User from "./models/User";
 
 const App = () => {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userEmail = localStorage.getItem("userEmail");
+    const authToken = localStorage.getItem("authToken");
+
+    if (userEmail && authToken) {
+      setUser(
+        new User(
+          userEmail,
+          "password123", // This is just an example, you can use a more secure way to store passwords
+          "John Doe",
+          1000
+        )
+      );
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{user, setUser}}>

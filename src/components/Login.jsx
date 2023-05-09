@@ -23,14 +23,8 @@ const Login = () => {
     if (isAuthenticated) {
       localStorage.setItem("userEmail", email);
       localStorage.setItem("authToken", token);
-      setUser(
-        new User({
-          email,
-          name: "John Doe",
-          accountBalance: 1000,
-          expenseItems: [],
-        })
-      );
+      setUser(new User(email, "password123", "John Doe", 1000));
+
       navigate("/dashboard");
     } else {
       setErrorMessage("Invalid email or password.");

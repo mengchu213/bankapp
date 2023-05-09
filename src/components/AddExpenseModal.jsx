@@ -21,7 +21,13 @@ const AddExpenseModal = ({onClose, onAdd}) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg w-96 p-6">
         <h2 className="text-2xl font-semibold mb-4">Add Expense Item</h2>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onAdd({name: name, cost: parseFloat(cost)});
+          }}
+          className="bg-white rounded-lg p-8"
+        >
           <div className="mb-4">
             <label className="block mb-1 font-semibold">Name</label>
             <input

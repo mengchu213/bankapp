@@ -5,6 +5,7 @@ import AddExpenseModal from "./AddExpenseModal";
 import UpdateExpenseModal from "./UpdateExpenseModal";
 import ExpenseItem from "./ExpenseItem";
 import UserInfo from "./UserInfo";
+import ExpenseItemModel from "../models/ExpenseItem";
 
 const Dashboard = () => {
   const {user, setUser} = useContext(UserContext);
@@ -19,7 +20,7 @@ const Dashboard = () => {
   }, [user, navigate]);
 
   const handleAddExpense = (expense) => {
-    const newExpense = new ExpenseItem(expense.name, expense.cost, user);
+    const newExpense = new ExpenseItemModel(expense.name, expense.cost, user);
     user.addExpenseItem(newExpense);
     setUser({...user});
   };
