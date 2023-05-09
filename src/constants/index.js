@@ -36,6 +36,7 @@ export const navLinks = [
 
 export const footerLinks = [
   {
+    key: "1",
     title: "Useful Links",
     links: [
       {
@@ -61,6 +62,7 @@ export const footerLinks = [
     ],
   },
   {
+    key: "2",
     title: "Community",
     links: [
       {
@@ -86,6 +88,7 @@ export const footerLinks = [
     ],
   },
   {
+    key: "3",
     title: "Partner",
     links: [
       {
