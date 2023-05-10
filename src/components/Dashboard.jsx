@@ -6,6 +6,7 @@ import UpdateExpenseModal from "./UpdateExpenseModal";
 import ExpenseItem from "./ExpenseItem";
 import UserInfo from "./UserInfo";
 import ExpenseItemModel from "../models/ExpenseItem";
+import User from "../models/User";
 
 const Dashboard = () => {
   const {user, setUser} = useContext(UserContext);

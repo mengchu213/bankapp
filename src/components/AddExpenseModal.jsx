@@ -25,6 +25,8 @@ const AddExpenseModal = ({onClose, onAdd}) => {
           onSubmit={(e) => {
             e.preventDefault();
             onAdd({name: name, cost: parseFloat(cost)});
+            setName("");
+            setCost("");
           }}
           className="bg-white rounded-lg p-8"
         >
