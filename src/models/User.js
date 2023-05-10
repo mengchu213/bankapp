@@ -1,30 +1,40 @@
-class User {
-  constructor(email, password, name, accountBalance) {
-    this.email = email;
-    this.password = password;
-    this.name = name;
-    this.accountBalance = accountBalance;
-    this.expenseItems = [];
-  }
+const User = (email, password, name, accountBalance) => {
+  const expenseItems = [];
 
-  addExpenseItem(expense) {
-    this.expenseItems.push(expense);
-    this.accountBalance -= expense.cost;
-  }
+  const addExpenseItem = (expense) => {
+    expenseItems.push(expense);
+    accountBalance -= expense.cost;
+    return {
+      newExpenseItems: [...expenseItems],
+      newAccountBalance: accountBalance,
+    };
+  };
 
-  deleteExpenseItem(index) {
-    this.accountBalance += this.expenseItems[index].cost;
-    this.expenseItems.splice(index, 1);
-  }
+  const deleteExpenseItem = (index) => {
+    accountBalance += expenseItems[index].cost;
+    expenseItems.splice(index, 1);
+  };
 
-  updateExpenseItem(index, updatedExpense) {
-    this.accountBalance += this.expenseItems[index].cost - updatedExpense.cost;
-    this.expenseItems[index].update(updatedExpense);
-  }
+  const updateExpenseItem = (index, updatedExpense) => {
+    accountBalance += expenseItems[index].cost - updatedExpense.cost;
+    expenseItems[index].update(updatedExpense);
+  };
 
-  listExpenseItems() {
-    return this.expenseItems;
-  }
-}
+  const listExpenseItems = () => {
+    return expenseItems;
+  };
+
+  return {
+    email,
+    password,
+    name,
+    accountBalance,
+    expenseItems,
+    addExpenseItem,
+    deleteExpenseItem,
+    updateExpenseItem,
+    listExpenseItems,
+  };
+};
 
 export default User;

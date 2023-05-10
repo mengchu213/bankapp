@@ -23,7 +23,7 @@ const Login = () => {
     if (isAuthenticated) {
       localStorage.setItem("userEmail", email);
       localStorage.setItem("authToken", token);
-      setUser(new User(email, "password123", "John Doe", 1000));
+      setUser(User(email, "password123", "John Doe", 1000));
       navigate("/dashboard");
     } else {
       setErrorMessage("Invalid email or password.");
@@ -72,7 +72,7 @@ const Login = () => {
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Login
             </button>

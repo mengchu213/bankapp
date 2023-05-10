@@ -22,18 +22,23 @@ const Dashboard = () => {
 
   const handleAddExpense = (expense) => {
     const newExpense = new ExpenseItemModel(expense.name, expense.cost, user);
-    user.addExpenseItem(newExpense);
-    setUser({...user});
+    const {newExpenseItems, newAccountBalance} =
+      user.addExpenseItem(newExpense);
+    setUser({
+      ...user,
+      expenseItems: newExpenseItems,
+      accountBalance: newAccountBalance,
+    });
   };
 
   const handleUpdateExpense = (index, updatedExpense) => {
     user.updateExpenseItem(index, updatedExpense);
-    setUser({...user});
+    setUser((prevState) => ({...prevState}));
   };
 
   const handleDeleteExpense = (index) => {
     user.deleteExpenseItem(index);
-    setUser({...user});
+    setUser((prevState) => ({...prevState}));
   };
 
   if (!user) {
@@ -50,16 +55,6 @@ const Dashboard = () => {
           </div>
           <div className="mb-4">
             <UserInfo user={user} />
-            <p key="name">
-              <span className="font-semibold">Name:</span> {user.name}
-            </p>
-            <p key="email">
-              <span className="font-semibold">Email:</span> {user.email}
-            </p>
-            <p key="accountBalance">
-              <span className="font-semibold">Account Balance:</span> $
-              {user.accountBalance?.toFixed(2) ?? "0.00"}
-            </p>
           </div>
           <div className="border-b-2 border-gray-200 mb-4"></div>
           <div className="mb-4">
@@ -83,7 +78,10 @@ const Dashboard = () => {
                 <ExpenseItem
                   key={index}
                   item={item}
-                  onUpdate={() => setUpdatingExpense(index)}
+                  onUpdate={(updatedExpense) => {
+                    user.updateExpenseItem(index, updatedExpense);
+                    setUpdatingExpense(null);
+                  }}
                   onDelete={() => handleDeleteExpense(index)}
                   index={index}
                 />

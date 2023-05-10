@@ -9,7 +9,7 @@ const UpdateExpenseModal = ({onClose, onUpdate, expenseItem}) => {
     e.preventDefault();
 
     expenseItem.update(name, parseFloat(cost));
-    onUpdate(expenseItem);
+    onUpdate({name: name, cost: parseFloat(cost)});
 
     onClose();
   };
