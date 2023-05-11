@@ -72,6 +72,15 @@ const Dashboard = () => {
               onAdd={handleAddExpense}
             />
           )}
+          {updatingExpense !== null && (
+            <UpdateExpenseModal
+              onClose={() => setUpdatingExpense(null)}
+              onUpdate={(updatedExpense) =>
+                handleUpdateExpense(updatingExpense.index, updatedExpense)
+              }
+              expenseItem={user.expenseItems[updatingExpense.index]}
+            />
+          )}
           {user.expenseItems.length > 0 ? (
             <div className="space-y-4">
               {user.expenseItems.map((item, index) => (
@@ -79,11 +88,12 @@ const Dashboard = () => {
                   key={index}
                   item={item}
                   onUpdate={(updatedExpense) => {
-                    user.updateExpenseItem(index, updatedExpense);
+                    handleUpdateExpense(index, updatedExpense);
                     setUpdatingExpense(null);
                   }}
                   onDelete={() => handleDeleteExpense(index)}
                   index={index}
+                  setUpdatingExpense={setUpdatingExpense}
                 />
               ))}
             </div>

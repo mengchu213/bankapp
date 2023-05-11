@@ -25,7 +25,7 @@ const ExpenseItem = ({item, onUpdate, onDelete, index}) => {
           </button>
           {updatingExpense && (
             <UpdateExpenseModal
-              expense={item}
+              expenseItem={item}
               onClose={() => setUpdatingExpense(false)}
               onUpdate={handleUpdate}
             />

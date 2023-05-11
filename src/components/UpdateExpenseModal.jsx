@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {UserContext} from "../UserContext.jsx";
 
-const UpdateExpenseModal = ({onClose, onUpdate, expenseItem}) => {
+const UpdateExpenseModal = ({expense, onClose, onUpdate}) => {
   const [name, setName] = useState(expenseItem.name);
   const [cost, setCost] = useState(expenseItem.cost);
 
@@ -9,8 +9,7 @@ const UpdateExpenseModal = ({onClose, onUpdate, expenseItem}) => {
     e.preventDefault();
 
     expenseItem.update(name, parseFloat(cost));
-    onUpdate({name: name, cost: parseFloat(cost)});
-
+    onUpdate = {handleUpdate};
     onClose();
   };
 
