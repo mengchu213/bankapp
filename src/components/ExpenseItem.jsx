@@ -1,14 +1,7 @@
 import React, {useState} from "react";
 import UpdateExpenseModal from "./UpdateExpenseModal";
 
-const ExpenseItem = ({item, onUpdate, onDelete, index}) => {
-  const [updatingExpense, setUpdatingExpense] = useState(false);
-
-  const handleUpdate = (updatedExpense) => {
-    onUpdate(index, updatedExpense);
-    setUpdatingExpense(false);
-  };
-
+const ExpenseItem = ({item, onUpdate, onDelete, index, setUpdatingExpense}) => {
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow-md">
       <div className="flex items-center justify-between">
@@ -23,13 +16,6 @@ const ExpenseItem = ({item, onUpdate, onDelete, index}) => {
           >
             Update
           </button>
-          {updatingExpense && item && (
-            <UpdateExpenseModal
-              expense={item}
-              onClose={() => setUpdatingExpense(false)}
-              onUpdate={handleUpdate}
-            />
-          )}
           <button
             className="text-red-500 font-bold"
             onClick={() => onDelete(index)}

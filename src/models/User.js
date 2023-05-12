@@ -1,10 +1,10 @@
 class User {
-  constructor(email, password, name, accountBalance) {
+  constructor(email, password, name, accountBalance, expenseItems = []) {
     this.email = email;
     this.password = password;
     this.name = name;
-    this.accountBalance = accountBalance;
-    this.expenseItems = [];
+    this.accountBalance = Number(accountBalance);
+    this.expenseItems = expenseItems;
   }
 
   addExpenseItem(expense) {

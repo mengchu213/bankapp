@@ -7,18 +7,23 @@ import ExpenseItem from "./ExpenseItem";
 import UserInfo from "./UserInfo";
 import ExpenseItemModel from "../models/ExpenseItem";
 import User from "../models/User";
+import AccountActions from "./AccountActions";
+import DepositModal from "./DepositModal";
+import WithdrawModal from "./WithdrawModal";
 
 const Dashboard = () => {
-  const {user, setUser} = useContext(UserContext);
+  const {user, setUser, loading} = useContext(UserContext);
   const navigate = useNavigate();
   const [addingExpense, setAddingExpense] = useState(false);
   const [updatingExpense, setUpdatingExpense] = useState(null);
+  const [depositModalOpen, setDepositModalOpen] = useState(false);
+  const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [user, navigate, loading]);
 
   const handleAddExpense = (expense) => {
     const newExpense = new ExpenseItemModel(expense.name, expense.cost, user);
@@ -69,6 +74,31 @@ const Dashboard = () => {
       return userCopy;
     });
   };
+  const handleDeposit = (amount) => {
+    setUser((prevUser) => {
+      const userCopy = new User(
+        prevUser.email,
+        prevUser.password,
+        prevUser.name,
+        prevUser.accountBalance + Number(amount),
+        prevUser.expenseItems // pass in the existing expense items
+      );
+      return userCopy;
+    });
+  };
+
+  const handleWithdraw = (amount) => {
+    setUser((prevUser) => {
+      const userCopy = new User(
+        prevUser.email,
+        prevUser.password,
+        prevUser.name,
+        prevUser.accountBalance - Number(amount),
+        prevUser.expenseItems // pass in the existing expense items
+      );
+      return userCopy;
+    });
+  };
 
   return (
     <div className="bg-primary min-h-screen">
@@ -77,6 +107,10 @@ const Dashboard = () => {
         <div className="bg-white p-8 rounded-lg shadow-md">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-semibold">Account Information</h2>
+            <AccountActions
+              onDeposit={() => setDepositModalOpen(true)}
+              onWithdraw={() => setWithdrawModalOpen(true)}
+            />
           </div>
           <div className="mb-4">
             {user ? <UserInfo user={user} /> : <p>Loading...</p>}
@@ -108,6 +142,7 @@ const Dashboard = () => {
                 expense={user.expenseItems[updatingExpense]}
               />
             )}
+
           {user && user.expenseItems.length > 0 ? (
             <div className="space-y-4">
               {user.expenseItems.map((item, index) => (
@@ -126,6 +161,21 @@ const Dashboard = () => {
             </div>
           ) : (
             <p>No expense items found.</p>
+          )}
+
+          {depositModalOpen && (
+            <DepositModal
+              isOpen={depositModalOpen}
+              onClose={() => setDepositModalOpen(false)}
+              onDeposit={handleDeposit}
+            />
+          )}
+          {withdrawModalOpen && (
+            <WithdrawModal
+              isOpen={withdrawModalOpen}
+              onClose={() => setWithdrawModalOpen(false)}
+              onWithdraw={handleWithdraw}
+            />
           )}
         </div>
       </div>

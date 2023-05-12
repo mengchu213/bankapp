@@ -1,30 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styles from "./style";
 import {Navbar, Hero, CTA, Footer, Login, Dashboard} from "./components";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {UserContext} from "./UserContext";
-import User from "./models/User";
+import UserContextProvider from "./UserContext";
 
 const App = () => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
-  }, [user]);
-
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContextProvider>
       <BrowserRouter>
         <div className="bg-primary w-full overflow-hidden">
           <Routes>
@@ -60,7 +42,7 @@ const App = () => {
           </Routes>
         </div>
       </BrowserRouter>
-    </UserContext.Provider>
+    </UserContextProvider>
   );
 };
 

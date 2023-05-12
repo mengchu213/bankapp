@@ -15,15 +15,15 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const validEmail = "user@example.com";
-    const validPassword = "password123";
+    const validEmail = "joebidem@gmail.com";
+    const validPassword = "joejoebidembidem";
     const isAuthenticated = email === validEmail && password === validPassword;
-    const token = "your_token_here";
+    const token = "asdf1234";
 
     if (isAuthenticated) {
       localStorage.setItem("userEmail", email);
       localStorage.setItem("authToken", token);
-      setUser(new User(email, "password123", "John Doe", 1000));
+      setUser(new User(email, "password123", "Joe Bidem", 1000));
       navigate("/dashboard");
     } else {
       setErrorMessage("Invalid email or password.");
