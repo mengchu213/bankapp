@@ -13,7 +13,7 @@ const App = () => {
     const authToken = localStorage.getItem("authToken");
 
     if (userEmail && authToken) {
-      setUser(User(userEmail, "password123", "John Doe", 1000));
+      setUser(new User(userEmail, "password123", "John Doe", 1000));
     }
   }, []);
 

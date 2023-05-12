@@ -1,15 +1,27 @@
 import React, {useState} from "react";
-import {UserContext} from "../UserContext.jsx";
 
 const UpdateExpenseModal = ({expense, onClose, onUpdate}) => {
-  const [name, setName] = useState(expenseItem.name);
-  const [cost, setCost] = useState(expenseItem.cost);
+  if (!expense) {
+    return null;
+  }
+
+  const [name, setName] = useState(expense.name);
+  const [cost, setCost] = useState(expense.cost);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (isNaN(cost)) {
+      console.error("Error: cost is not a valid number.");
+      return;
+    }
 
-    expenseItem.update(name, parseFloat(cost));
-    onUpdate = {handleUpdate};
+    const updatedExpense = {
+      ...expense,
+      name,
+      cost: parseFloat(cost),
+    };
+
+    onUpdate(updatedExpense);
     onClose();
   };
 
@@ -29,7 +41,7 @@ const UpdateExpenseModal = ({expense, onClose, onUpdate}) => {
           type="number"
           placeholder="Cost"
           value={cost}
-          onChange={(e) => setCost(e.target.value)}
+          onChange={(e) => setCost(e.target.value)} // Ensure this is working correctly
         />
         <div className="flex items-center justify-end p-6">
           <button

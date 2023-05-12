@@ -14,18 +14,18 @@ const ExpenseItem = ({item, onUpdate, onDelete, index}) => {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-xl font-bold">{item.name}</h3>
-          <p>${item.cost.toFixed(2)}</p>
+          <p>${item.cost?.toFixed(2)}</p>
         </div>
         <div className="flex items-center">
           <button
             className="text-blue-500 font-bold mr-4"
-            onClick={() => setUpdatingExpense(true)}
+            onClick={() => setUpdatingExpense(index)} // pass the index here
           >
             Update
           </button>
-          {updatingExpense && (
+          {updatingExpense && item && (
             <UpdateExpenseModal
-              expenseItem={item}
+              expense={item}
               onClose={() => setUpdatingExpense(false)}
               onUpdate={handleUpdate}
             />

@@ -24,26 +24,56 @@ const Dashboard = () => {
     const newExpense = new ExpenseItemModel(expense.name, expense.cost, user);
     const {newExpenseItems, newAccountBalance} =
       user.addExpenseItem(newExpense);
-    setUser({
-      ...user,
-      expenseItems: newExpenseItems,
-      accountBalance: newAccountBalance,
-    });
+
+    // Creating a new user instance
+    const updatedUser = new User(
+      user.email,
+      user.password,
+      user.name,
+      newAccountBalance
+    );
+
+    updatedUser.expenseItems = newExpenseItems;
+
+    setUser(updatedUser);
   };
 
   const handleUpdateExpense = (index, updatedExpense) => {
-    user.updateExpenseItem(index, updatedExpense);
-    setUser((prevState) => ({...prevState}));
+    if (updatedExpense.cost === undefined) {
+      // Handle the case when updatedExpense.cost is undefined.
+      // You could show an error message to the user, for example.
+      console.error("Error: updatedExpense.cost is undefined");
+      return;
+    }
+
+    setUser((prevUser) => {
+      // Create a copy of prevUser and modify the copy
+      const userCopy = new User(
+        prevUser.email,
+        prevUser.password,
+        prevUser.name,
+        prevUser.accountBalance
+      );
+      userCopy.expenseItems = [...prevUser.expenseItems];
+      userCopy.updateExpenseItem(index, updatedExpense);
+      return userCopy;
+    });
   };
 
   const handleDeleteExpense = (index) => {
-    user.deleteExpenseItem(index);
-    setUser((prevState) => ({...prevState}));
+    setUser((prevUser) => {
+      // Create a copy of prevUser and modify the copy
+      const userCopy = new User(
+        prevUser.email,
+        prevUser.password,
+        prevUser.name,
+        prevUser.accountBalance
+      );
+      userCopy.expenseItems = [...prevUser.expenseItems];
+      userCopy.deleteExpenseItem(index);
+      return userCopy;
+    });
   };
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <div className="bg-primary min-h-screen">
@@ -54,7 +84,7 @@ const Dashboard = () => {
             <h2 className="text-2xl font-semibold">Account Information</h2>
           </div>
           <div className="mb-4">
-            <UserInfo user={user} />
+            {user ? <UserInfo user={user} /> : <p>Loading...</p>}
           </div>
           <div className="border-b-2 border-gray-200 mb-4"></div>
           <div className="mb-4">
@@ -72,16 +102,18 @@ const Dashboard = () => {
               onAdd={handleAddExpense}
             />
           )}
-          {updatingExpense !== null && (
-            <UpdateExpenseModal
-              onClose={() => setUpdatingExpense(null)}
-              onUpdate={(updatedExpense) =>
-                handleUpdateExpense(updatingExpense.index, updatedExpense)
-              }
-              expenseItem={user.expenseItems[updatingExpense.index]}
-            />
-          )}
-          {user.expenseItems.length > 0 ? (
+          {user &&
+            updatingExpense !== null &&
+            user.expenseItems[updatingExpense] && ( // updatingExpense now holds the index of the item being updated
+              <UpdateExpenseModal
+                onClose={() => setUpdatingExpense(null)}
+                onUpdate={(updatedExpense) =>
+                  handleUpdateExpense(updatingExpense, updatedExpense)
+                }
+                expense={user.expenseItems[updatingExpense]}
+              />
+            )}
+          {user && user.expenseItems.length > 0 ? (
             <div className="space-y-4">
               {user.expenseItems.map((item, index) => (
                 <ExpenseItem
