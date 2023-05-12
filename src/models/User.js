@@ -42,6 +42,16 @@ class User {
       i === index ? updatedExpense : item
     );
   }
+
+  toJSON() {
+    return {
+      email: this.email,
+      password: this.password,
+      name: this.name,
+      accountBalance: this.accountBalance,
+      expenseItems: this.expenseItems,
+    };
+  }
 }
 
 export default User;

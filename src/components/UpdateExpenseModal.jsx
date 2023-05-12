@@ -41,7 +41,7 @@ const UpdateExpenseModal = ({expense, onClose, onUpdate}) => {
           type="number"
           placeholder="Cost"
           value={cost}
-          onChange={(e) => setCost(e.target.value)} // Ensure this is working correctly
+          onChange={(e) => setCost(e.target.value)}
         />
         <div className="flex items-center justify-end p-6">
           <button

@@ -9,13 +9,19 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userEmail = localStorage.getItem("userEmail");
-    const authToken = localStorage.getItem("authToken");
-
-    if (userEmail && authToken) {
-      setUser(new User(userEmail, "password123", "John Doe", 1000));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
 
   return (
     <UserContext.Provider value={{user, setUser}}>

@@ -19,7 +19,7 @@ const ExpenseItem = ({item, onUpdate, onDelete, index}) => {
         <div className="flex items-center">
           <button
             className="text-blue-500 font-bold mr-4"
-            onClick={() => setUpdatingExpense(index)} // pass the index here
+            onClick={() => setUpdatingExpense(index)}
           >
             Update
           </button>

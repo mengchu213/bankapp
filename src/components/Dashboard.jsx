@@ -25,7 +25,6 @@ const Dashboard = () => {
     const {newExpenseItems, newAccountBalance} =
       user.addExpenseItem(newExpense);
 
-    // Creating a new user instance
     const updatedUser = new User(
       user.email,
       user.password,
@@ -40,14 +39,11 @@ const Dashboard = () => {
 
   const handleUpdateExpense = (index, updatedExpense) => {
     if (updatedExpense.cost === undefined) {
-      // Handle the case when updatedExpense.cost is undefined.
-      // You could show an error message to the user, for example.
       console.error("Error: updatedExpense.cost is undefined");
       return;
     }
 
     setUser((prevUser) => {
-      // Create a copy of prevUser and modify the copy
       const userCopy = new User(
         prevUser.email,
         prevUser.password,
@@ -62,7 +58,6 @@ const Dashboard = () => {
 
   const handleDeleteExpense = (index) => {
     setUser((prevUser) => {
-      // Create a copy of prevUser and modify the copy
       const userCopy = new User(
         prevUser.email,
         prevUser.password,
@@ -104,7 +99,7 @@ const Dashboard = () => {
           )}
           {user &&
             updatingExpense !== null &&
-            user.expenseItems[updatingExpense] && ( // updatingExpense now holds the index of the item being updated
+            user.expenseItems[updatingExpense] && (
               <UpdateExpenseModal
                 onClose={() => setUpdatingExpense(null)}
                 onUpdate={(updatedExpense) =>
