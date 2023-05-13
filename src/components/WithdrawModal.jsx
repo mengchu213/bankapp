@@ -5,7 +5,7 @@ const WithdrawModal = ({isOpen, onClose, onWithdraw}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting Withdraw:", amount); // Debug line
+    console.log("Submitting Withdraw:", amount);
     onWithdraw(parseFloat(amount));
     setAmount("");
     onClose();
@@ -26,7 +26,7 @@ const WithdrawModal = ({isOpen, onClose, onWithdraw}) => {
         />
         <button
           type="submit"
-          className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-700"
+          className=" px-4 py-2 text-white bg-red-500 rounded hover:bg-red-700"
         >
           Withdraw
         </button>

@@ -9,17 +9,16 @@ const App = () => {
     <UserContextProvider>
       <BrowserRouter>
         <div className="bg-primary w-full overflow-hidden">
+          <div className={`${styles.paddingX} ${styles.flexCenter}`}>
+            <div className={`${styles.boxWidth}`}>
+              <Navbar />
+            </div>
+          </div>
           <Routes>
             <Route
               path="/"
               element={
                 <>
-                  <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-                    <div className={`${styles.boxWidth}`}>
-                      <Navbar />
-                    </div>
-                  </div>
-
                   <div className={`bg-primary ${styles.flexStart}`}>
                     <div className={`${styles.boxWidth}`}>
                       <Hero />
@@ -31,7 +30,6 @@ const App = () => {
                   >
                     <div className={`${styles.boxWidth}`}>
                       <CTA />
-                      <Footer />
                     </div>
                   </div>
                 </>
@@ -40,6 +38,11 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
+          <div className={`bg-primary ${styles.paddingX} ${styles.flexStart}`}>
+            <div className={`${styles.boxWidth}`}>
+              <Footer />
+            </div>
+          </div>
         </div>
       </BrowserRouter>
     </UserContextProvider>

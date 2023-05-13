@@ -11,7 +11,7 @@ const AccountInfo = ({user, handleDeposit, handleWithdraw}) => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-semibold">Account Information</h2>
+        <h2 className="text-2xl font-semi">Account Information</h2>
         <AccountActions
           onDeposit={() => setDepositModalOpen(true)}
           onWithdraw={() => setWithdrawModalOpen(true)}

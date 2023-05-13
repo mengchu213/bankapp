@@ -2,16 +2,16 @@ import React from "react";
 
 const AccountActions = ({onDeposit, onWithdraw}) => {
   return (
-    <div className="mt-6">
+    <div className=" flex justify-center items-center ">
       <button
         onClick={onDeposit}
-        className="px-4 py-2 mr-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+        className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2"
       >
         Deposit
       </button>
       <button
         onClick={onWithdraw}
-        className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-700"
+        className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-2xl px-5 py-2.5 text-center mr-2 mb-2"
       >
         Withdraw
       </button>
