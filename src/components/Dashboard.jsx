@@ -1,17 +1,19 @@
 import React, {useContext, useState, useEffect} from "react";
 import {UserContext} from "../UserContext.jsx";
 import {useNavigate} from "react-router-dom";
-import AddExpenseModal from "./AddExpenseModal";
-import UpdateExpenseModal from "./UpdateExpenseModal";
-import ExpenseItem from "./ExpenseItem";
-import UserInfo from "./UserInfo";
-import ExpenseItemModel from "../models/ExpenseItem";
-import User from "../models/User";
-import AccountActions from "./AccountActions";
-import DepositModal from "./DepositModal";
-import WithdrawModal from "./WithdrawModal";
 import {logo, robot} from "../assets/index.js";
 import styles from "../style.js";
+import {
+  AddExpenseModal,
+  UpdateExpenseModal,
+  ExpenseItem,
+  UserInfo,
+  AccountActions,
+  DepositModal,
+  WithdrawModal,
+  ExpenseHandler,
+  AccountActionsHandler,
+} from "./";
 
 const Dashboard = () => {
   const {user, setUser, loading} = useContext(UserContext);
@@ -20,87 +22,18 @@ const Dashboard = () => {
   const [updatingExpense, setUpdatingExpense] = useState(null);
   const [depositModalOpen, setDepositModalOpen] = useState(false);
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
+  const {handleAddExpense, handleUpdateExpense, handleDeleteExpense} =
+    ExpenseHandler({user, setUser});
+  const {handleDeposit, handleWithdraw} = AccountActionsHandler({
+    user,
+    setUser,
+  });
 
   useEffect(() => {
     if (!loading && !user) {
       navigate("/login");
     }
   }, [user, navigate, loading]);
-
-  const handleAddExpense = (expense) => {
-    const newExpense = new ExpenseItemModel(expense.name, expense.cost, user);
-    const {newExpenseItems, newAccountBalance} =
-      user.addExpenseItem(newExpense);
-
-    const updatedUser = new User(
-      user.email,
-      user.password,
-      user.name,
-      newAccountBalance
-    );
-
-    updatedUser.expenseItems = newExpenseItems;
-
-    setUser(updatedUser);
-  };
-
-  const handleUpdateExpense = (index, updatedExpense) => {
-    if (updatedExpense.cost === undefined) {
-      console.error("Error: updatedExpense.cost is undefined");
-      return;
-    }
-
-    setUser((prevUser) => {
-      const userCopy = new User(
-        prevUser.email,
-        prevUser.password,
-        prevUser.name,
-        prevUser.accountBalance
-      );
-      userCopy.expenseItems = [...prevUser.expenseItems];
-      userCopy.updateExpenseItem(index, updatedExpense);
-      return userCopy;
-    });
-  };
-
-  const handleDeleteExpense = (index) => {
-    setUser((prevUser) => {
-      const userCopy = new User(
-        prevUser.email,
-        prevUser.password,
-        prevUser.name,
-        prevUser.accountBalance
-      );
-      userCopy.expenseItems = [...prevUser.expenseItems];
-      userCopy.deleteExpenseItem(index);
-      return userCopy;
-    });
-  };
-  const handleDeposit = (amount) => {
-    setUser((prevUser) => {
-      const userCopy = new User(
-        prevUser.email,
-        prevUser.password,
-        prevUser.name,
-        prevUser.accountBalance + Number(amount),
-        prevUser.expenseItems
-      );
-      return userCopy;
-    });
-  };
-
-  const handleWithdraw = (amount) => {
-    setUser((prevUser) => {
-      const userCopy = new User(
-        prevUser.email,
-        prevUser.password,
-        prevUser.name,
-        prevUser.accountBalance - Number(amount),
-        prevUser.expenseItems
-      );
-      return userCopy;
-    });
-  };
 
   return (
     <div className="bg-primary min-h-screen">
@@ -110,7 +43,7 @@ const Dashboard = () => {
           <div className="bg-blue-100 p-8 rounded-lg shadow-md col-span-2">
             <h2 className="text-2xl  mb-4 font-bold">Account Information</h2>
             {user ? <UserInfo user={user} /> : <p>Loading...</p>}
-            <div className="border-b-2 border-gray-300 mb-4"></div>
+            <div className="border-b-2 border-gray-300 my-5"></div>
             <h2 className="text-2xl font-bold mb-4">Expense Items</h2>
             <button
               className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-md px-5 py-2.5 text-center mr-2 mb-2"
