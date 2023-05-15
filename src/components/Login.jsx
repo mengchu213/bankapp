@@ -23,7 +23,7 @@ const Login = () => {
     if (isAuthenticated) {
       localStorage.setItem("userEmail", email);
       localStorage.setItem("authToken", token);
-      setUser(new User(email, "password123", "Joe Bidem", 1000));
+      setUser(new User(email, "joejoebidembidem", "Joe Bidem", 1000));
       navigate("/dashboard");
     } else {
       setErrorMessage("Invalid email or password.");
