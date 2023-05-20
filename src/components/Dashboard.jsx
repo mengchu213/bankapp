@@ -13,6 +13,7 @@ import {
   WithdrawModal,
   ExpenseHandler,
   AccountActionsHandler,
+  TransferModal,
 } from "./";
 
 const Dashboard = () => {
@@ -24,10 +25,13 @@ const Dashboard = () => {
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const {handleAddExpense, handleUpdateExpense, handleDeleteExpense} =
     ExpenseHandler({user, setUser});
-  const {handleDeposit, handleWithdraw} = AccountActionsHandler({
-    user,
-    setUser,
-  });
+  const [transferModalOpen, setTransferModalOpen] = useState(false);
+  const {handleDeposit, handleWithdraw, handleTransfer} = AccountActionsHandler(
+    {
+      user,
+      setUser,
+    }
+  );
 
   useEffect(() => {
     if (!loading && !user) {
@@ -98,6 +102,7 @@ const Dashboard = () => {
                 <AccountActions
                   onDeposit={() => setDepositModalOpen(true)}
                   onWithdraw={() => setWithdrawModalOpen(true)}
+                  onTransfer={() => setTransferModalOpen(true)}
                   className="w-full text-center text-xl py-2 mb-2"
                 />
               </div>
@@ -126,6 +131,13 @@ const Dashboard = () => {
                 isOpen={withdrawModalOpen}
                 onClose={() => setWithdrawModalOpen(false)}
                 onWithdraw={handleWithdraw}
+              />
+            )}
+            {transferModalOpen && (
+              <TransferModal
+                isOpen={transferModalOpen}
+                onClose={() => setTransferModalOpen(false)}
+                onTransfer={handleTransfer}
               />
             )}
           </div>

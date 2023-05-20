@@ -27,8 +27,26 @@ export const AccountActionsHandler = ({user, setUser}) => {
       return userCopy;
     });
   };
+  const handleTransfer = (amount, cardNumber) => {
+    if (cardNumber.length < 12) {
+      throw new Error(
+        "Invalid card number. Card number should be at least 12 digits long."
+      );
+    }
 
-  return {handleDeposit, handleWithdraw};
+    setUser((prevUser) => {
+      const userCopy = new User(
+        prevUser.email,
+        prevUser.password,
+        prevUser.name,
+        prevUser.accountBalance - Number(amount),
+        prevUser.expenseItems
+      );
+      return userCopy;
+    });
+  };
+
+  return {handleDeposit, handleWithdraw, handleTransfer};
 };
 
 export default AccountActionsHandler;

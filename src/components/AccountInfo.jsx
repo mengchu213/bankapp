@@ -3,10 +3,12 @@ import AccountActions from "./AccountActions";
 import UserInfo from "./UserInfo";
 import DepositModal from "./DepositModal";
 import WithdrawModal from "./WithdrawModal";
+import TransferModal from "./TransferModal";
 
-const AccountInfo = ({user, handleDeposit, handleWithdraw}) => {
+const AccountInfo = ({user, handleDeposit, handleWithdraw, handleTransfer}) => {
   const [depositModalOpen, setDepositModalOpen] = useState(false);
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
+  const [transferModalOpen, setTransferModalOpen] = useState(false);
 
   return (
     <div>
@@ -15,6 +17,7 @@ const AccountInfo = ({user, handleDeposit, handleWithdraw}) => {
         <AccountActions
           onDeposit={() => setDepositModalOpen(true)}
           onWithdraw={() => setWithdrawModalOpen(true)}
+          onTransfer={() => setTransferModalOpen(true)}
         />
       </div>
       <div className="mb-4">
@@ -32,6 +35,13 @@ const AccountInfo = ({user, handleDeposit, handleWithdraw}) => {
           isOpen={withdrawModalOpen}
           onClose={() => setWithdrawModalOpen(false)}
           onWithdraw={handleWithdraw}
+        />
+      )}
+      {transferModalOpen && (
+        <TransferModal
+          isOpen={transferModalOpen}
+          onClose={() => setTransferModalOpen(false)}
+          onTransfer={handleTransfer}
         />
       )}
     </div>
